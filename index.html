@@ -77,6 +77,10 @@
             <div class="stair-type-icon"><i class="fa-solid fa-dharmachakra"></i></div>
             <span>Spiral Stair</span>
           </div>
+          <div class="stair-type-card" data-type="double-l">
+            <div class="stair-type-icon"><i class="fa-solid fa-arrows-split-up-and-left"></i></div>
+            <span>Double-L (2 Landings)</span>
+          </div>
         </div>
       </div>
 
@@ -146,6 +150,11 @@
             <input type="number" id="input-nosing" class="number-input" value="25">
           </div>
         </div>
+
+        <!-- Dynamic Typology-Specific Parametric Controls -->
+        <div class="dynamic-params-container" id="dynamic-params-container">
+          <!-- Dynamically populated based on selected stair type -->
+        </div>
       </div>
 
       <!-- Section 3: Material & Structure Options -->
@@ -211,6 +220,7 @@
           <div class="preset-chip" data-preset="compact">Compact Steep (2600mm)</div>
           <div class="preset-chip" data-preset="commercial">Public Commercial (3000mm)</div>
           <div class="preset-chip" data-preset="spiral-modern">Spiral Loft (2900mm)</div>
+          <div class="preset-chip" data-preset="switchback-spec">stair1.jpg Switchback (3000mm)</div>
         </div>
       </div>
 
@@ -264,10 +274,67 @@
 
         <!-- 2. 2D Section Blueprint Pane -->
         <div class="view-pane" id="pane-blueprint">
-          <div id="blueprint-pane">
-            <svg id="blueprint-svg" class="blueprint-svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet">
-              <!-- Rendered dynamically by JavaScript -->
-            </svg>
+          <div class="blueprint-container">
+            <div class="blueprint-header-bar">
+              <div class="blueprint-title-group">
+                <span class="blueprint-sheet-code">DWG-001</span>
+                <div>
+                  <h3 class="blueprint-title">Architectural 2D Blueprint Sections</h3>
+                  <span class="blueprint-sheet-sub">Longitudinal & Transverse Projections with DIN / IBC Dimensioning</span>
+                </div>
+              </div>
+              <div class="blueprint-view-toggles" id="blueprint-view-toggles">
+                <button class="bp-toggle-btn active" data-view="dual"><i class="fa-solid fa-table-columns"></i> Dual Views</button>
+                <button class="bp-toggle-btn" data-view="side"><i class="fa-solid fa-align-left"></i> Side View</button>
+                <button class="bp-toggle-btn" data-view="front"><i class="fa-solid fa-bars"></i> Front View</button>
+              </div>
+            </div>
+
+            <div id="blueprint-pane" class="blueprint-dual-layout">
+              <!-- Card 1: Side Elevation View (Longitudinal Section) -->
+              <div class="blueprint-card" id="bp-card-side">
+                <div class="bp-card-header">
+                  <div class="bp-card-title">
+                    <i class="fa-solid fa-ruler-horizontal"></i>
+                    <span>ELEVATION 01 — SIDE SECTION (LONGITUDINAL)</span>
+                  </div>
+                  <span class="bp-badge">PROFILE CUT</span>
+                </div>
+                <div class="bp-svg-wrapper">
+                  <svg id="blueprint-side-svg" class="blueprint-svg" viewBox="0 0 800 560" preserveAspectRatio="xMidYMid meet">
+                    <!-- Rendered dynamically -->
+                  </svg>
+                </div>
+                <div class="bp-card-footer">
+                  <div class="bp-spec-item"><span>GOING (TREAD):</span> <strong id="bp-side-going">260 mm</strong></div>
+                  <div class="bp-spec-item"><span>RISE:</span> <strong id="bp-side-rise">175 mm</strong></div>
+                  <div class="bp-spec-item"><span>INCLINE PITCH:</span> <strong id="bp-side-pitch">33.9°</strong></div>
+                  <div class="bp-spec-item"><span>HANDRAIL:</span> <strong>34"–36" (900mm)</strong></div>
+                </div>
+              </div>
+
+              <!-- Card 2: Front Elevation View (Transverse Section) -->
+              <div class="blueprint-card" id="bp-card-front">
+                <div class="bp-card-header">
+                  <div class="bp-card-title">
+                    <i class="fa-solid fa-ruler-vertical"></i>
+                    <span>ELEVATION 02 — FRONT VIEW (TRANSVERSE)</span>
+                  </div>
+                  <span class="bp-badge">FRONT CUT</span>
+                </div>
+                <div class="bp-svg-wrapper">
+                  <svg id="blueprint-front-svg" class="blueprint-svg" viewBox="0 0 800 560" preserveAspectRatio="xMidYMid meet">
+                    <!-- Rendered dynamically -->
+                  </svg>
+                </div>
+                <div class="bp-card-footer">
+                  <div class="bp-spec-item"><span>STAIR WIDTH:</span> <strong id="bp-front-width">900 mm</strong></div>
+                  <div class="bp-spec-item"><span>FLOOR HEIGHT:</span> <strong id="bp-front-height">2800 mm</strong></div>
+                  <div class="bp-spec-item"><span>LANDING(S):</span> <strong id="bp-front-landing">At Step 8</strong></div>
+                  <div class="bp-spec-item"><span>CLEARANCE:</span> <strong>Compliant (≥900mm)</strong></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -275,6 +342,16 @@
         <div class="view-pane" id="pane-gallery">
           <div id="gallery-pane">
             <div class="gallery-grid">
+
+              <!-- stair1.jpg reference specification card -->
+              <div class="gallery-card featured-card">
+                <img src="stair1.jpg" alt="Switchback Stair with 2-Quarter Landings & Front/Side Elevation">
+                <div class="gallery-card-body">
+                  <span class="gallery-tag">PARAMETRIC SPEC (stair1.jpg)</span>
+                  <h3>Switchback Stair with 2-Quarter Landings & Dual Elevation</h3>
+                  <p>Architectural layout showing side section with 34"–36" (86.5–96.5 cm) handrail, 7" (18 cm) riser, 11" (28 cm) tread going, front elevation (10' / 3m floor height), and top plan with 2-quarter landings and 36" (91.4 cm) minimum clear width.</p>
+                </div>
+              </div>
               
               <div class="gallery-card">
                 <img src="145793c5-9b9c-410d-91da-bfb65e621f85.JPG" alt="Rise and Tread Calculation Diagram">
