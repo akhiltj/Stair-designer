@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StairCraft Studio - Architectural Stair Calculator & 3D Visualizer</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Application Header -->
+  <header class="app-header">
+    <div class="logo-area">
+      <div class="logo-icon">
+        <i class="fa-solid fa-stairs"></i>
+      </div>
+      <div class="logo-title">
+        <h1>StairCraft Studio</h1>
+        <span>Architectural Design & Parametric 3D Calculator</span>
+      </div>
+    </div>
+
+    <div class="header-controls">
+      <!-- Unit Selection -->
+      <div class="unit-selector" id="unit-selector">
+        <button class="unit-btn active" data-unit="mm">mm</button>
+        <button class="unit-btn" data-unit="cm">cm</button>
+        <button class="unit-btn" data-unit="in">inch</button>
+      </div>
+
+      <!-- Quick Actions -->
+      <button class="header-btn" id="btn-reset-defaults">
+        <i class="fa-solid fa-rotate-left"></i> Reset
+      </button>
+      <button class="header-btn primary-btn" id="btn-export-spec">
+        <i class="fa-solid fa-file-pdf"></i> Export Spec Sheet
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Workspace Grid -->
+  <main class="app-container">
+
+    <!-- Left Controls Panel -->
+    <aside class="sidebar-panel">
+
+      <!-- Section 1: Stair Type Selector -->
+      <div class="panel-section">
+        <div class="section-header">
+          <i class="fa-solid fa-layer-group section-icon"></i>
+          <h2 class="section-title">1. Stair Model Type</h2>
+        </div>
+        <div class="stair-types-grid">
+          <div class="stair-type-card active" data-type="straight">
+            <div class="stair-type-icon"><i class="fa-solid fa-arrows-up-to-line"></i></div>
+            <span>Straight Flight</span>
+          </div>
+          <div class="stair-type-card" data-type="l-shaped">
+            <div class="stair-type-icon"><i class="fa-solid fa-turn-up"></i></div>
+            <span>L-Shape (90°)</span>
+          </div>
+          <div class="stair-type-card" data-type="u-shaped">
+            <div class="stair-type-icon"><i class="fa-solid fa-arrow-rotate-left"></i></div>
+            <span>U-Shape (180°)</span>
+          </div>
+          <div class="stair-type-card" data-type="spiral">
+            <div class="stair-type-icon"><i class="fa-solid fa-dharmachakra"></i></div>
+            <span>Spiral Stair</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Core Dimensions -->
+      <div class="panel-section">
+        <div class="section-header">
+          <i class="fa-solid fa-ruler-combined section-icon"></i>
+          <h2 class="section-title">2. Technical Inputs</h2>
+        </div>
+
+        <!-- Total Height (Rise) -->
+        <div class="input-group">
+          <div class="input-label-wrapper">
+            <label class="input-label" for="input-total-height">Total Height (Rise)</label>
+            <span class="input-val-badge" id="badge-total-height">2800 mm</span>
+          </div>
+          <div class="range-slider-container">
+            <input type="range" id="slider-total-height" min="1000" max="5000" step="10" value="2800">
+            <input type="number" id="input-total-height" class="number-input" value="2800">
+          </div>
+        </div>
+
+        <!-- Target Riser Height -->
+        <div class="input-group">
+          <div class="input-label-wrapper">
+            <label class="input-label" for="input-target-riser">Target Riser Height</label>
+            <span class="input-val-badge" id="badge-target-riser">175 mm</span>
+          </div>
+          <div class="range-slider-container">
+            <input type="range" id="slider-target-riser" min="120" max="230" step="1" value="175">
+            <input type="number" id="input-target-riser" class="number-input" value="175">
+          </div>
+        </div>
+
+        <!-- Target Tread Depth -->
+        <div class="input-group">
+          <div class="input-label-wrapper">
+            <label class="input-label" for="input-target-tread">Target Tread Depth</label>
+            <span class="input-val-badge" id="badge-target-tread">260 mm</span>
+          </div>
+          <div class="range-slider-container">
+            <input type="range" id="slider-target-tread" min="200" max="380" step="5" value="260">
+            <input type="number" id="input-target-tread" class="number-input" value="260">
+          </div>
+        </div>
+
+        <!-- Stair Width -->
+        <div class="input-group">
+          <div class="input-label-wrapper">
+            <label class="input-label" for="input-stair-width">Staircase Width</label>
+            <span class="input-val-badge" id="badge-stair-width">900 mm</span>
+          </div>
+          <div class="range-slider-container">
+            <input type="range" id="slider-stair-width" min="600" max="2000" step="25" value="900">
+            <input type="number" id="input-stair-width" class="number-input" value="900">
+          </div>
+        </div>
+
+        <!-- Nosing Projection -->
+        <div class="input-group">
+          <div class="input-label-wrapper">
+            <label class="input-label" for="input-nosing">Nosing Projection</label>
+            <span class="input-val-badge" id="badge-nosing">25 mm</span>
+          </div>
+          <div class="range-slider-container">
+            <input type="range" id="slider-nosing" min="0" max="50" step="5" value="25">
+            <input type="number" id="input-nosing" class="number-input" value="25">
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Material & Structure Options -->
+      <div class="panel-section">
+        <div class="section-header">
+          <i class="fa-solid fa-cubes-stacked section-icon"></i>
+          <h2 class="section-title">3. Structure & Styling</h2>
+        </div>
+
+        <!-- Riser Mode -->
+        <div class="input-group">
+          <div class="input-label-wrapper">
+            <span class="input-label">Riser Type</span>
+          </div>
+          <div class="toggle-group" id="toggle-riser-type">
+            <button class="toggle-opt active" data-val="closed">Closed Risers</button>
+            <button class="toggle-opt" data-val="open">Open Risers</button>
+          </div>
+        </div>
+
+        <!-- Stringer Style -->
+        <div class="input-group">
+          <label class="input-label" for="select-stringer-style" style="margin-bottom: 6px; display: block;">Stringer Support</label>
+          <select id="select-stringer-style" class="select-input">
+            <option value="closed-side">Closed Side Stringers</option>
+            <option value="mono">Central Mono-Stringer</option>
+            <option value="under-double">Double Under-Step Beams</option>
+            <option value="floating">Floating / Cantilevered</option>
+          </select>
+        </div>
+
+        <!-- Railing Style -->
+        <div class="input-group">
+          <label class="input-label" for="select-railing-style" style="margin-bottom: 6px; display: block;">Railing & Balustrade</label>
+          <select id="select-railing-style" class="select-input">
+            <option value="glass">Glass Panel & Stainless Rail</option>
+            <option value="metal-posts">Black Steel Spindles</option>
+            <option value="wood-spindles">Classic Wooden Rail</option>
+            <option value="none">None / Open</option>
+          </select>
+        </div>
+
+        <!-- Finish Material -->
+        <div class="input-group">
+          <label class="input-label" for="select-material" style="margin-bottom: 6px; display: block;">Tread Finish Material</label>
+          <select id="select-material" class="select-input">
+            <option value="oak">Natural White Oak</option>
+            <option value="walnut">Dark Walnut Wood</option>
+            <option value="concrete">Polished Concrete / Marble</option>
+            <option value="steel">Matte Industrial Black Steel</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Section 4: Preset Designs -->
+      <div class="panel-section">
+        <div class="section-header">
+          <i class="fa-solid fa-wand-magic-sparkles section-icon"></i>
+          <h2 class="section-title">Design Presets</h2>
+        </div>
+        <div class="presets-grid">
+          <div class="preset-chip" data-preset="standard">Standard House (2800mm)</div>
+          <div class="preset-chip" data-preset="compact">Compact Steep (2600mm)</div>
+          <div class="preset-chip" data-preset="commercial">Public Commercial (3000mm)</div>
+          <div class="preset-chip" data-preset="spiral-modern">Spiral Loft (2900mm)</div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Center Viewport Panel -->
+    <section class="viewport-panel">
+      <!-- Tabs Bar -->
+      <div class="viewport-tabs-bar">
+        <div class="tabs-group">
+          <button class="tab-btn active" data-pane="pane-3d">
+            <i class="fa-solid fa-cube"></i> 3D Parametric Model
+          </button>
+          <button class="tab-btn" data-pane="pane-blueprint">
+            <i class="fa-solid fa-drafting-compass"></i> 2D Section Blueprint
+          </button>
+          <button class="tab-btn" data-pane="pane-gallery">
+            <i class="fa-solid fa-images"></i> Reference Models & Codes
+          </button>
+        </div>
+
+        <!-- Camera Angle Presets (3D View Only) -->
+        <div class="camera-controls-bar" id="camera-controls">
+          <button class="cam-btn active" data-cam="iso">3D Iso</button>
+          <button class="cam-btn" data-cam="side">Side Elevation</button>
+          <button class="cam-btn" data-cam="front">Front</button>
+          <button class="cam-btn" data-cam="top">Top Plan</button>
+        </div>
+      </div>
+
+      <!-- Viewport Display Container -->
+      <div class="viewport-content">
+
+        <!-- 1. 3D Model Pane -->
+        <div class="view-pane active" id="pane-3d">
+          <canvas id="canvas-3d"></canvas>
+          
+          <!-- HUD Info Overlay -->
+          <div class="hud-overlay">
+            <div class="hud-badge">Model: <span id="hud-model-type">Straight Flight</span></div>
+            <div class="hud-badge">Angle / Pitch: <span id="hud-pitch-angle">33.9°</span></div>
+            <div class="hud-badge">Total Run: <span id="hud-total-run">3900 mm</span></div>
+          </div>
+
+          <!-- Interactive View Action Buttons -->
+          <div class="view-tools-overlay">
+            <button class="tool-fab" id="fab-reset-view" title="Reset View Camera"><i class="fa-solid fa-compress"></i></button>
+            <button class="tool-fab" id="fab-toggle-grid" title="Toggle Spatial Dimensions"><i class="fa-solid fa-border-none"></i></button>
+          </div>
+        </div>
+
+        <!-- 2. 2D Section Blueprint Pane -->
+        <div class="view-pane" id="pane-blueprint">
+          <div id="blueprint-pane">
+            <svg id="blueprint-svg" class="blueprint-svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet">
+              <!-- Rendered dynamically by JavaScript -->
+            </svg>
+          </div>
+        </div>
+
+        <!-- 3. Reference Gallery & Diagrams Pane -->
+        <div class="view-pane" id="pane-gallery">
+          <div id="gallery-pane">
+            <div class="gallery-grid">
+              
+              <div class="gallery-card">
+                <img src="145793c5-9b9c-410d-91da-bfb65e621f85.JPG" alt="Rise and Tread Calculation Diagram">
+                <div class="gallery-card-body">
+                  <h3>Stair Rise & Tread Calculation Diagram</h3>
+                  <p>Standard architectural representation showing total height, landed run distance (2m), step riser height, and landing slab thickness (200mm).</p>
+                </div>
+              </div>
+
+              <div class="gallery-card">
+                <img src="1abeae15-b925-40e5-89aa-275e58e51f25.JPG" alt="RedX Stair Dimensions & Pitch Angle">
+                <div class="gallery-card-body">
+                  <h3>Step Geometry & Stringer Pitch Standards</h3>
+                  <p>Detailed breakdown of tread length (10 7/16"), step rise (7 1/2"), nosing overhang, stringer cut line, and 40° pitch angle.</p>
+                </div>
+              </div>
+
+              <div class="gallery-card">
+                <img src="77771b96-a605-4fd2-80f7-2c3f894f4683.JPG" alt="Civil Concept Straight Stair Isometric">
+                <div class="gallery-card-body">
+                  <h3>Straight Stair Flight Isometric Concept</h3>
+                  <p>Visual perspective of flight landing, individual step risers, tread width, and total horizontal run projection.</p>
+                </div>
+              </div>
+
+              <div class="gallery-card">
+                <img src="a919ca89-8165-4fdb-964e-e6d22d83a85c.JPG" alt="Architectural Staircase Types Chart">
+                <div class="gallery-card-body">
+                  <h3>Staircase Shapes & Typology Guide</h3>
+                  <p>Comprehensive layout chart including Straight, L-Shaped, Double L-Shaped, U-Shaped, 90/180 Winder, Curved, and Spiral stair designs.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Right Calculated Technical Details Panel -->
+    <aside class="details-panel">
+
+      <!-- Calculation Metrics Section -->
+      <div class="panel-section">
+        <div class="section-header">
+          <i class="fa-solid fa-calculator section-icon"></i>
+          <h2 class="section-title">Calculated Details</h2>
+        </div>
+
+        <div class="metrics-grid">
+          
+          <!-- Number of Risers -->
+          <div class="metric-card">
+            <span class="metric-label">Total Risers</span>
+            <span class="metric-val" id="res-num-risers">16</span>
+            <span class="metric-sub">Steps / Verticals</span>
+          </div>
+
+          <!-- Actual Riser Height -->
+          <div class="metric-card">
+            <span class="metric-label">Actual Riser</span>
+            <span class="metric-val" id="res-actual-riser">175.0 mm</span>
+            <span class="metric-sub">Each Step Height</span>
+          </div>
+
+          <!-- Number of Treads -->
+          <div class="metric-card">
+            <span class="metric-label">Total Treads</span>
+            <span class="metric-val" id="res-num-treads">15</span>
+            <span class="metric-sub">Horizontals</span>
+          </div>
+
+          <!-- Actual Tread Length -->
+          <div class="metric-card">
+            <span class="metric-label">Tread Depth</span>
+            <span class="metric-val" id="res-actual-tread">260.0 mm</span>
+            <span class="metric-sub">Going Distance</span>
+          </div>
+
+          <!-- Slope Pitch Angle -->
+          <div class="metric-card">
+            <span class="metric-label">Stair Incline</span>
+            <span class="metric-val" id="res-stair-angle">33.9°</span>
+            <span class="metric-sub">Pitch Angle ($\theta$)</span>
+          </div>
+
+          <!-- Total Horizontal Run -->
+          <div class="metric-card">
+            <span class="metric-label">Total Run</span>
+            <span class="metric-val" id="res-total-run">3900 mm</span>
+            <span class="metric-sub">Floor Span</span>
+          </div>
+
+          <!-- Stringer Incline Length -->
+          <div class="metric-card full-width">
+            <span class="metric-label">Stringer Length (Hypotenuse)</span>
+            <span class="metric-val" id="res-stringer-length">4801 mm</span>
+            <span class="metric-sub">Diagonal Support Board Cut Length</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Ergonomics & Comfort Index -->
+      <div class="panel-section">
+        <div class="section-header">
+          <i class="fa-solid fa-heart-pulse section-icon"></i>
+          <h2 class="section-title">Ergonomic Comfort</h2>
+        </div>
+
+        <div class="comfort-card">
+          <div class="comfort-header">
+            <span class="comfort-title">Blondel's Rule Index</span>
+            <span class="comfort-status-badge ideal" id="comfort-badge">IDEAL COMFORT</span>
+          </div>
+
+          <div class="comfort-formula">
+            <span class="formula-expr">2 × Rise + Tread</span>
+            <span class="formula-res" id="blondel-value">610 mm</span>
+          </div>
+
+          <div class="comfort-bar-bg">
+            <div class="comfort-bar-fill" id="comfort-bar" style="width: 75%;"></div>
+          </div>
+
+          <p style="font-size: 0.76rem; color: var(--text-muted); line-height: 1.4;">
+            Optimal stride comfort range is <strong>600 mm – 640 mm</strong> (23.6" – 25.2"). Calculated stride score: <span id="blondel-eval-text" style="color: var(--text-main); font-weight:600;">Perfect residential proportion</span>.
+          </p>
+        </div>
+      </div>
+
+      <!-- Building Code Audit Section -->
+      <div class="panel-section">
+        <div class="section-header">
+          <i class="fa-solid fa-shield-halved section-icon"></i>
+          <h2 class="section-title">Building Code Compliance</h2>
+        </div>
+
+        <div class="code-check-list">
+          <div class="code-check-item pass" id="check-riser-max">
+            <span>Max Riser Height (≤ 190 mm)</span>
+            <i class="fa-solid fa-circle-check check-icon"></i>
+          </div>
+
+          <div class="code-check-item pass" id="check-tread-min">
+            <span>Min Tread Depth (≥ 250 mm)</span>
+            <i class="fa-solid fa-circle-check check-icon"></i>
+          </div>
+
+          <div class="code-check-item pass" id="check-pitch-angle">
+            <span>Ideal Pitch Angle (30° – 37°)</span>
+            <i class="fa-solid fa-circle-check check-icon"></i>
+          </div>
+
+          <div class="code-check-item pass" id="check-headroom">
+            <span>Min Headroom (≥ 2000 mm)</span>
+            <i class="fa-solid fa-circle-check check-icon"></i>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- Export Spec Sheet Printable Modal -->
+  <div class="modal-backdrop" id="export-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 class="modal-title"><i class="fa-solid fa-clipboard-list" style="color: var(--primary);"></i> Stair Technical Specification Sheet</h2>
+        <button class="close-btn" id="btn-close-modal">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-spec-content">
+        <!-- Rendered dynamically -->
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-color);">
+        <button class="header-btn" id="btn-modal-cancel">Close</button>
+        <button class="header-btn primary-btn" id="btn-modal-print"><i class="fa-solid fa-print"></i> Print Specification</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Three.js & Dependencies via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+  <!-- Main Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
